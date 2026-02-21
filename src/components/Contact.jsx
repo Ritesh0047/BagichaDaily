@@ -27,7 +27,7 @@ export default function Contact() {
             <h3 className="font-semibold text-lg text-orchard-800 mb-6">Contact Details</h3>
             <div className="space-y-4">
               <a
-                href="tel:+919876543210"
+                href="tel:+919418154424"
                 className="flex items-center gap-4 p-4 rounded-xl bg-white border border-orchard-100 hover:border-orchard-200 transition-colors"
               >
                 <span className="w-12 h-12 rounded-full bg-orchard-100 flex items-center justify-center text-orchard-600">
@@ -37,11 +37,11 @@ export default function Contact() {
                 </span>
                 <div>
                   <p className="text-sm text-gray-500">Phone</p>
-                  <p className="font-medium text-orchard-800">+91 98765 43210</p>
+                  <p className="font-medium text-orchard-800">+91 9418154424</p>
                 </div>
               </a>
               <a
-                href="mailto:hello@applesfarm.com"
+                href="mailto:bagicha.daily@gmail.com"
                 className="flex items-center gap-4 p-4 rounded-xl bg-white border border-orchard-100 hover:border-orchard-200 transition-colors"
               >
                 <span className="w-12 h-12 rounded-full bg-orchard-100 flex items-center justify-center text-orchard-600">
@@ -51,7 +51,7 @@ export default function Contact() {
                 </span>
                 <div>
                   <p className="text-sm text-gray-500">Email</p>
-                  <p className="font-medium text-orchard-800">hello@applesfarm.com</p>
+                  <p className="font-medium text-orchard-800">bagicha.daily@gmail.com</p>
                 </div>
               </a>
               <div className="flex items-center gap-4 p-4 rounded-xl bg-white border border-orchard-100">
@@ -69,7 +69,7 @@ export default function Contact() {
             </div>
 
             <a
-              href="https://wa.me/919876543210"
+              href="https://wa.me/919418154424"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 mt-6 px-6 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition-colors"

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
-const PHONE = '919876543210';
+const PHONE = '9418154424';
 
 function buildWhatsAppMessage(cart, cartTotal, getWeightPrice) {
   const lines = cart.map(

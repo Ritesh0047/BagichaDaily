@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import logo from '../assets/bagicha_logo.webp';
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -17,10 +18,14 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm border-b border-orchard-100">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 md:h-20">
-          <Link to="/" className="flex items-center gap-2 group">
-            <span className="text-3xl">🍎</span>
+          <Link to="/" className="flex items-center gap-3 group">
+            <img
+              src={logo}
+              alt="Bagicha Daily"
+              className="h-10 md:h-12 w-auto object-contain"
+            />
             <span className="font-display text-xl md:text-2xl font-bold text-orchard-800 group-hover:text-orchard-600 transition-colors">
-              Apple Farm
+              Bagicha Daily
             </span>
           </Link>
 
