@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WhyChooseUs from '../components/WhyChooseUs.astro';
+import Features from '../components/Features.astro';
+import ContactSection from '../components/ContactSection.astro';
+---
+
+<Layout
+  title="About Us"
+  description="Learn about Bagicha Daily — family-run Himalayan orchards bringing farm-fresh apples directly to your home."
+>
+  <section class="section-padding bg-cream overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 items-center">
+        <div class="relative order-2 lg:order-1">
+          <div class="absolute -top-6 -left-6 w-full h-full bg-sage/50 rounded-[3rem] -rotate-3"></div>
+          <div class="relative rounded-[2.5rem] overflow-hidden shadow-[var(--shadow-lift)] aspect-[4/5] max-w-md mx-auto lg:mx-0">
+            <img
+              src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=800&q=80"
+              alt="Hand holding a fresh Himalayan apple"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        <div class="order-1 lg:order-2">
+          <p class="section-label">About Bagicha</p>
+          <h1 class="page-heading mb-4 sm:mb-6">
+            More Than Food, A Healthier Tomorrow
+          </h1>
+          <p class="text-body text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-5">
+            Nestled in the foothills of the Himalayas, our family-run orchards in Himachal Pradesh benefit from the region's unique climate — cold winters, mild summers, and pure mountain air — which gives our apples their signature crisp texture and sweet flavor.
+          </p>
+          <p class="text-body text-sm sm:text-base md:text-lg leading-relaxed mb-6 sm:mb-8">
+            We believe in bringing farm-fresh produce directly to your table. No long supply chains, no cold storage for months. Just freshly harvested apples, packed with care and delivered to your doorstep.
+          </p>
+          <a href="/products" class="btn-secondary">
+            Explore Our Produce
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <WhyChooseUs />
+  <Features />
+  <ContactSection />
+</Layout>

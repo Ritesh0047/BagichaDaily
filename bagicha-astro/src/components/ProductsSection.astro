@@ -1,0 +1,59 @@
+---
+import { products } from '../lib/products';
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  limit?: number;
+  showViewAll?: boolean;
+  hideHeader?: boolean;
+}
+
+const {
+  title = 'Our Apple Collection',
+  subtitle,
+  limit,
+  showViewAll = false,
+  hideHeader = false,
+} = Astro.props;
+
+const items = limit ? products.slice(0, limit) : products;
+---
+
+<section class="section-padding bg-sage-light/40 relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {
+      !hideHeader && (
+        <div class="text-center mb-10 sm:mb-14">
+          <p class="section-label">Our Produce</p>
+          <h2 class="section-heading mb-3 sm:mb-4">
+            {title}
+          </h2>
+          {
+            subtitle && (
+              <p class="text-body max-w-2xl mx-auto text-sm sm:text-base md:text-lg">{subtitle}</p>
+            )
+          }
+        </div>
+      )
+    }
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+      {items.map((product) => <ProductCard product={product} />)}
+    </div>
+
+    {
+      showViewAll && limit && products.length > limit && (
+        <div class="text-center mt-12">
+          <a href="/products" class="btn-primary">
+            View All Products
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </a>
+        </div>
+      )
+    }
+  </div>
+</section>

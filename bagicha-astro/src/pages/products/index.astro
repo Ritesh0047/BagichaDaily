@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductsSection from '../../components/ProductsSection.astro';
+import Features from '../../components/Features.astro';
+import PageHeader from '../../components/PageHeader.astro';
+---
+
+<Layout
+  title="Our Products"
+  description="Explore our selection of premium Himalayan apples. Each variety is carefully chosen for its taste and quality."
+>
+  <PageHeader
+    label="Our Produce"
+    title="Nature's Best, Just for You"
+    description="Explore our selection of premium Himalayan apples. Each variety is carefully chosen for its taste and quality."
+  />
+  <ProductsSection hideHeader={true} />
+  <Features />
+</Layout>

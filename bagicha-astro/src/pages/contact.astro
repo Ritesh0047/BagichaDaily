@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactSection from '../components/ContactSection.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
+
+<Layout
+  title="Contact Us"
+  description="Have a question or want to place an order? Reach out to Bagicha Daily — we're happy to help."
+>
+  <PageHeader
+    label="Contact Us"
+    title="We're Here to Help"
+    description="Have a question or want to place an order? Reach out — we're happy to help."
+  />
+  <ContactSection hideHeader={true} />
+</Layout>

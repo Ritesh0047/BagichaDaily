@@ -1,0 +1,50 @@
+---
+import { WHATSAPP_PHONE } from '../consts';
+---
+
+<section class="section-padding bg-sage/60 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 20% 50%, #e8ede0 0%, transparent 50%), radial-gradient(circle at 80% 50%, #f0ebe3 0%, transparent 50%);"></div>
+
+  <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <p class="section-label">Stay Connected</p>
+    <h2 class="section-heading mb-3 sm:mb-4">
+      Stay Fresh with Bagicha
+    </h2>
+    <p class="text-sm sm:text-base text-body mb-6 sm:mb-8 max-w-xl mx-auto">
+      Get updates on new harvests, seasonal varieties, and exclusive offers — straight to your inbox.
+    </p>
+
+    <form data-newsletter-form class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto mb-6">
+      <input
+        type="email"
+        name="email"
+        placeholder="Your email address"
+        required
+        class="flex-1 px-5 py-3.5 rounded-full border border-sage bg-white focus:ring-2 focus:ring-terracotta focus:border-terracotta outline-none text-charcoal placeholder:text-body/50"
+      />
+      <button type="submit" class="btn-primary shrink-0 px-8">Subscribe</button>
+    </form>
+
+    <p class="text-sm text-body/70">
+      Or order directly on
+      <a
+        href={`https://wa.me/91${WHATSAPP_PHONE}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-terracotta font-medium hover:text-terracotta-dark transition-colors"
+      >
+        WhatsApp
+      </a>
+    </p>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector('[data-newsletter-form]');
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    alert('Thank you for subscribing! We will keep you updated on fresh harvests.');
+    form.reset();
+  });
+</script>

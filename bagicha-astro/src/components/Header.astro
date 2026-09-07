@@ -1,0 +1,171 @@
+---
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/products', label: 'Products' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md border-b border-sage/80">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-14 sm:h-16 md:h-[4.5rem]">
+      <a href="/" class="flex items-center gap-3 group shrink-0">
+        <img
+          src="/bagicha_logo.webp"
+          alt="Bagicha Daily"
+          class="h-9 sm:h-10 md:h-11 w-auto object-contain"
+        />
+        <div class="hidden sm:flex flex-col">
+          <span class="font-display text-base sm:text-lg md:text-xl font-bold text-charcoal group-hover:text-terracotta transition-colors leading-tight">
+            Bagicha Daily
+          </span>
+          <span class="text-[10px] text-body/80 tracking-widest uppercase">Apno Se Apno Tak</span>
+        </div>
+      </a>
+
+      <div class="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+        {
+          navLinks.map(({ href, label }) => (
+            <a
+              href={href}
+              class:list={[
+                'px-4 py-2 rounded-full text-sm font-medium transition-all duration-200',
+                isActive(href)
+                  ? 'bg-terracotta/10 text-terracotta'
+                  : 'text-charcoal hover:text-terracotta hover:bg-sage/50',
+              ]}
+            >
+              {label}
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="hidden md:flex items-center gap-2">
+        <a
+          href="/cart"
+          class="relative flex items-center gap-2 px-4 py-2 rounded-full text-charcoal hover:bg-sage/60 transition-colors"
+          aria-label="Cart"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <span class="text-sm font-medium hidden lg:inline">Cart</span>
+          <span
+            data-cart-badge
+            class="absolute -top-0.5 -right-0.5 min-w-5 h-5 px-1 bg-terracotta text-white text-xs font-bold rounded-full hidden items-center justify-center"
+          ></span>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2 md:hidden">
+        <a href="/cart" class="relative p-2.5 text-charcoal" aria-label="Cart">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <span
+            data-cart-badge
+            class="absolute top-0.5 right-0.5 min-w-4 h-4 px-0.5 bg-terracotta text-white text-[10px] font-bold rounded-full hidden items-center justify-center"
+          ></span>
+        </a>
+        <button
+          type="button"
+          data-mobile-toggle
+          class="p-2.5 text-charcoal hover:bg-sage rounded-xl transition-colors"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg data-menu-open class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg data-menu-close class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div data-mobile-menu class="lg:hidden hidden py-4 border-t border-sage">
+      <div class="flex flex-col gap-1">
+        {
+          navLinks.map(({ href, label }) => (
+            <a
+              href={href}
+              class:list={[
+                'px-4 py-3 rounded-xl font-medium transition-colors',
+                isActive(href) ? 'bg-terracotta/10 text-terracotta' : 'text-charcoal hover:bg-sage/50',
+              ]}
+            >
+              {label}
+            </a>
+          ))
+        }
+        <a href="/cart" class="px-4 py-3 rounded-xl text-charcoal hover:bg-sage/50 font-medium md:hidden">
+          Cart <span data-cart-label></span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  import { CART_UPDATE_EVENT, getCartCount, getCart } from '../lib/cart';
+
+  function updateCartBadges() {
+    const count = getCartCount(getCart());
+    const badges = document.querySelectorAll('[data-cart-badge]');
+    const label = document.querySelector('[data-cart-label]');
+
+    badges.forEach((badge) => {
+      if (count > 0) {
+        badge.textContent = count > 99 ? '99+' : String(count);
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+      } else {
+        badge.classList.add('hidden');
+        badge.classList.remove('flex');
+      }
+    });
+
+    if (label) {
+      label.textContent = count > 0 ? `(${count})` : '';
+    }
+  }
+
+  const toggle = document.querySelector('[data-mobile-toggle]');
+  const menu = document.querySelector('[data-mobile-menu]');
+  const openIcon = document.querySelector('[data-menu-open]');
+  const closeIcon = document.querySelector('[data-menu-close]');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden', isOpen);
+    openIcon?.classList.toggle('hidden', !isOpen);
+    closeIcon?.classList.toggle('hidden', isOpen);
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      openIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  updateCartBadges();
+  window.addEventListener(CART_UPDATE_EVENT, updateCartBadges);
+</script>
