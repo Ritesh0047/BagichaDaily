@@ -6,7 +6,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://bagichadaily.com',
+  site: 'https://bagichadaily.vercel.app',
   devToolbar: {
     enabled: false,
   },
