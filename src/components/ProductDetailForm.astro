@@ -59,10 +59,18 @@ const available = isProductAvailable(product);
 
       {
         available ? (
-          <div class="mt-6 sm:mt-8 inline-flex flex-wrap items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-white text-sm sm:text-base font-semibold" style="background: linear-gradient(135deg, var(--color-golden) 0%, var(--color-golden-dark) 100%);">
-            <span>{product.packSize} pack</span>
-            <span class="text-cream/70">•</span>
-            <span class="font-bold">₹{product.price.toLocaleString('en-IN')}</span>
+          <div class="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+            <div class="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-white text-sm sm:text-base font-semibold" style="background: linear-gradient(135deg, var(--color-golden) 0%, var(--color-golden-dark) 100%);">
+              <span>{product.packSize} pack</span>
+              <span class="text-cream/70">•</span>
+              <span class="font-bold">₹{product.price.toLocaleString('en-IN')}</span>
+            </div>
+            <span class="text-body/60 font-medium text-sm sm:text-base line-through decoration-body/40">
+              ₹{Math.round(product.price * 1.25).toLocaleString('en-IN')}
+            </span>
+            <span class="bg-apple text-white font-bold text-xs sm:text-sm px-2.5 py-1 rounded-md shadow-sm">
+              20% OFF
+            </span>
           </div>
         ) : (
           <div class="mt-8 space-y-3">

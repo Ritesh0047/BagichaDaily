@@ -37,11 +37,21 @@ const available = isProductAvailable(product);
       <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-bark/10 to-transparent pointer-events-none"></div>
       {
         available ? (
-          <span class="absolute top-3 left-3 sm:top-4 sm:left-4 text-white font-bold text-xs sm:text-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md backdrop-blur-sm" style="background: linear-gradient(135deg, var(--color-golden) 0%, var(--color-golden-dark) 100%);">
-            {formatPackPrice(product)}
-          </span>
+          <>
+            <div class="absolute top-3 left-3 sm:top-4 sm:left-4 flex flex-col gap-1 items-start z-10">
+              <span class="text-white font-bold text-xs sm:text-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md backdrop-blur-sm" style="background: linear-gradient(135deg, var(--color-golden) 0%, var(--color-golden-dark) 100%);">
+                {formatPackPrice(product)}
+              </span>
+              <span class="text-white font-medium text-[10px] sm:text-xs px-2 py-0.5 rounded-full shadow-sm backdrop-blur-sm bg-bark/60 line-through decoration-white/70">
+                ₹{Math.round(product.price * 1.25).toLocaleString('en-IN')}
+              </span>
+            </div>
+            <span class="absolute top-3 right-3 sm:top-4 sm:right-4 bg-apple text-white font-bold text-[10px] sm:text-xs px-2 sm:px-2.5 py-1 rounded-md shadow-sm z-10">
+              20% OFF
+            </span>
+          </>
         ) : (
-          <span class="absolute top-3 left-3 sm:top-4 sm:left-4 bg-bark text-cream font-bold text-xs sm:text-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm uppercase tracking-wide">
+          <span class="absolute top-3 left-3 sm:top-4 sm:left-4 bg-bark text-cream font-bold text-xs sm:text-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm uppercase tracking-wide z-10">
             Sold Out
           </span>
         )
