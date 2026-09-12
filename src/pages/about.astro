@@ -14,12 +14,29 @@ import ContactSection from '../components/ContactSection.astro';
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 items-center">
         <div class="relative order-2 lg:order-1 reveal">
           <div class="absolute -top-6 -left-6 w-full h-full rounded-[3rem] -rotate-3" style="background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-golden)/15 100%);"></div>
-          <div class="relative rounded-[2.5rem] overflow-hidden shadow-[var(--shadow-lift)] aspect-[4/5] max-w-md mx-auto lg:mx-0">
-            <img
-              src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=800&q=80"
-              alt="Hand holding a fresh Himalayan apple"
-              class="w-full h-full object-cover"
-            />
+          <div class="relative rounded-[2.5rem] overflow-hidden shadow-[var(--shadow-lift)] aspect-[4/5] max-w-md mx-auto lg:mx-0 bg-white/50 p-2 sm:p-3 backdrop-blur-sm border border-white/20">
+            <div class="grid grid-cols-2 grid-rows-2 gap-2 sm:gap-3 w-full h-full">
+              <img
+                src="/products/gallery/royal-3.webp"
+                alt="Hand picking fresh apple"
+                class="w-full h-full object-cover rounded-tl-[1.8rem] hover:scale-105 transition-transform duration-500"
+              />
+              <img
+                src="/products/gallery/golden-1.webp"
+                alt="Golden apples on tree"
+                class="w-full h-full object-cover rounded-tr-[1.8rem] hover:scale-105 transition-transform duration-500"
+              />
+              <img
+                src="/products/gallery/royal-1.webp"
+                alt="Crate of fresh apples"
+                class="w-full h-full object-cover rounded-bl-[1.8rem] hover:scale-105 transition-transform duration-500"
+              />
+              <img
+                src="/products/gallery/golden-2.webp"
+                alt="Fresh Golden Delicious apple"
+                class="w-full h-full object-cover rounded-br-[1.8rem] hover:scale-105 transition-transform duration-500"
+              />
+            </div>
           </div>
         </div>
 

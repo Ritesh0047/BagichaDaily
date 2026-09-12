@@ -10,6 +10,7 @@ export interface Product {
   description: string;
   soldOut?: boolean;
   harvestingSoon?: boolean;
+  gallery?: string[];
 }
 
 export const products: Product[] = productsData;

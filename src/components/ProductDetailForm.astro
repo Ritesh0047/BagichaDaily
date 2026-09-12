@@ -28,11 +28,12 @@ const available = isProductAvailable(product);
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-start">
     <div class="card-surface overflow-hidden p-3 lg:sticky lg:top-28">
-      <div class="aspect-square rounded-2xl overflow-hidden bg-sage-light relative">
+      <div class="aspect-square rounded-2xl overflow-hidden bg-sage-light relative mb-4">
         <img
+          id="main-product-image"
           src={product.image}
           alt={product.name}
-          class:list={['w-full h-full object-cover', !available && 'grayscale-[35%]']}
+          class:list={['w-full h-full object-cover transition-opacity duration-300', !available && 'grayscale-[35%]']}
           decoding="async"
           fetchpriority="high"
           width="1200"
@@ -46,6 +47,31 @@ const available = isProductAvailable(product);
           )
         }
       </div>
+      
+      {
+        product.gallery && product.gallery.length > 0 && (
+          <div class="grid grid-cols-4 gap-2 sm:gap-3">
+            <button
+              type="button"
+              class="gallery-thumbnail relative aspect-square rounded-xl overflow-hidden border-2 border-golden cursor-pointer transition-all hover:opacity-80"
+              data-image-src={product.image}
+              aria-label={`View main image of ${product.name}`}
+            >
+              <img src={product.image} alt={product.name} class="w-full h-full object-cover" loading="lazy" />
+            </button>
+            {product.gallery.map((galleryImage, index) => (
+              <button
+                type="button"
+                class="gallery-thumbnail relative aspect-square rounded-xl overflow-hidden border-2 border-transparent hover:border-golden/50 cursor-pointer transition-all hover:opacity-80"
+                data-image-src={galleryImage}
+                aria-label={`View image ${index + 1} of ${product.name}`}
+              >
+                <img src={galleryImage} alt={`${product.name} gallery image ${index + 1}`} class="w-full h-full object-cover" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        )
+      }
     </div>
 
     <div class="lg:pt-4">
@@ -195,6 +221,29 @@ const available = isProductAvailable(product);
       window.dispatchEvent(new CustomEvent('open-order-modal', {
         detail: { type: 'product', product, quantity }
       }));
+    });
+
+    const mainImage = root.querySelector<HTMLImageElement>('#main-product-image');
+    const thumbnails = root.querySelectorAll<HTMLButtonElement>('.gallery-thumbnail');
+
+    thumbnails.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const newSrc = thumb.getAttribute('data-image-src');
+        if (mainImage && newSrc) {
+          mainImage.style.opacity = '0.5';
+          setTimeout(() => {
+            mainImage.src = newSrc;
+            mainImage.style.opacity = '1';
+            
+            thumbnails.forEach(t => {
+              t.classList.remove('border-golden');
+              t.classList.add('border-transparent');
+            });
+            thumb.classList.remove('border-transparent');
+            thumb.classList.add('border-golden');
+          }, 150);
+        }
+      });
     });
 
     updateTotal();
