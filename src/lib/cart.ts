@@ -123,7 +123,7 @@ Pincode: ${customer.pincode}`;
 
   msg += `
 
-Please confirm and let me know delivery details.`;
+Please confirm my order.`;
   return msg;
 }
 
@@ -152,7 +152,7 @@ Pincode: ${customer.pincode}`;
 
   msg += `
 
-Please confirm availability.`;
+Please confirm my order.`;
   return msg;
 }
 
