@@ -1,0 +1,199 @@
+---
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/products', label: 'Products' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="sticky top-0 z-50 bg-cream/95 backdrop-blur-xl border-b border-golden/10 shadow-sm">
+  <!-- Top Bar -->
+  <div class="bg-bark text-white/90 text-[10px] sm:text-xs py-2 px-4 sm:px-6 lg:px-8 hidden md:block">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <span class="flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 text-golden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+          Fresh From The Himalayas
+        </span>
+        <span class="text-white/30">|</span>
+        <span>100% Natural</span>
+        <span class="text-white/30">|</span>
+        <span>Hand-Picked</span>
+        <span class="text-white/30">|</span>
+        <span>Free Delivery Across India</span>
+      </div>
+      <div class="flex items-center gap-1.5 italic text-white/80">
+        <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+        A Taste of the Himalayas in Every Bite
+        <svg class="w-3.5 h-3.5 text-golden ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+      </div>
+    </div>
+  </div>
+
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-14 sm:h-16 md:h-[4.5rem]">
+      <a href="/" class="flex items-center gap-3 group shrink-0">
+        <img
+          src="/bagicha_logo.webp"
+          alt="Bagicha Daily"
+          class="h-9 sm:h-10 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+        />
+        <div class="hidden sm:flex flex-col">
+          <span class="font-display text-base sm:text-lg md:text-xl text-bark group-hover:text-apple transition-colors leading-tight">
+            Bagicha Daily
+          </span>
+          <span class="text-[10px] text-golden tracking-widest uppercase font-medium">Apno Se Apno Tak</span>
+        </div>
+      </a>
+
+      <div class="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+        {
+          navLinks.map(({ href, label }) => (
+            <a
+              href={href}
+              class:list={[
+                'relative py-5 text-sm font-bold transition-all duration-200',
+                isActive(href)
+                  ? 'text-apple'
+                  : 'text-bark hover:text-apple',
+              ]}
+            >
+              {label}
+              {isActive(href) && (
+                <span class="absolute bottom-0 left-0 w-full h-[2px] bg-apple"></span>
+              )}
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="hidden md:flex items-center gap-2">
+        <a
+          href="/cart"
+          class="relative flex items-center gap-2 px-4 py-2 rounded-full text-bark hover:text-apple hover:bg-cream-warm transition-all duration-200"
+          aria-label="Cart"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <span class="text-sm font-medium hidden lg:inline">Cart</span>
+          <span
+            data-cart-badge
+            class="absolute -top-0.5 -right-0.5 min-w-5 h-5 px-1 text-white text-xs font-bold rounded-full hidden items-center justify-center"
+            style="background: linear-gradient(135deg, var(--color-apple) 0%, var(--color-apple-dark) 100%);"
+          ></span>
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2 md:hidden">
+        <a href="/cart" class="relative p-2.5 text-bark" aria-label="Cart">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+          <span
+            data-cart-badge
+            class="absolute top-0.5 right-0.5 min-w-4 h-4 px-0.5 text-white text-[10px] font-bold rounded-full hidden items-center justify-center"
+            style="background: linear-gradient(135deg, var(--color-apple) 0%, var(--color-apple-dark) 100%);"
+          ></span>
+        </a>
+        <button
+          type="button"
+          data-mobile-toggle
+          class="p-2.5 text-bark hover:bg-sage rounded-xl transition-colors"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <svg data-menu-open class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg data-menu-close class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div data-mobile-menu class="lg:hidden hidden py-4 border-t border-golden/10">
+      <div class="flex flex-col gap-1">
+        {
+          navLinks.map(({ href, label }) => (
+            <a
+              href={href}
+              class:list={[
+                'px-4 py-3 rounded-xl font-medium transition-colors',
+                isActive(href) ? 'bg-apple/8 text-apple' : 'text-bark hover:bg-sage/50',
+              ]}
+            >
+              {label}
+            </a>
+          ))
+        }
+        <a href="/cart" class="px-4 py-3 rounded-xl text-bark hover:bg-sage/50 font-medium md:hidden">
+          Cart <span data-cart-label></span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  import { CART_UPDATE_EVENT, getCartCount, getCart } from '../lib/cart';
+
+  function updateCartBadges() {
+    const count = getCartCount(getCart());
+    const badges = document.querySelectorAll('[data-cart-badge]');
+    const label = document.querySelector('[data-cart-label]');
+
+    badges.forEach((badge) => {
+      if (count > 0) {
+        badge.textContent = count > 99 ? '99+' : String(count);
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+      } else {
+        badge.classList.add('hidden');
+        badge.classList.remove('flex');
+      }
+    });
+
+    if (label) {
+      label.textContent = count > 0 ? `(${count})` : '';
+    }
+  }
+
+  const toggle = document.querySelector('[data-mobile-toggle]');
+  const menu = document.querySelector('[data-mobile-menu]');
+  const openIcon = document.querySelector('[data-menu-open]');
+  const closeIcon = document.querySelector('[data-menu-close]');
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden', isOpen);
+    openIcon?.classList.toggle('hidden', !isOpen);
+    closeIcon?.classList.toggle('hidden', isOpen);
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.classList.add('hidden');
+      openIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      toggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  updateCartBadges();
+  window.addEventListener(CART_UPDATE_EVENT, updateCartBadges);
+</script>

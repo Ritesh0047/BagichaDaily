@@ -1,0 +1,172 @@
+---
+import type { Product } from '../lib/products';
+import { formatPackPrice, getProductCardImage, isProductAvailable } from '../lib/products';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const available = isProductAvailable(product);
+---
+
+<article
+  class:list={[
+    'group card-surface overflow-hidden transition-all duration-300',
+    available ? 'hover:-translate-y-2 hover:shadow-[var(--shadow-lift)]' : 'opacity-90',
+  ]}
+  data-product-card
+  data-product={JSON.stringify(product)}
+  data-sold-out={available ? undefined : 'true'}
+>
+  <a href={`/products/${product.id}`} class="block relative">
+    <div class="aspect-[4/3] overflow-hidden bg-sage-light relative">
+      <img
+        src={getProductCardImage(product)}
+        alt={product.name}
+        class:list={[
+          'w-full h-full object-cover transition-transform duration-500',
+          available ? 'group-hover:scale-105' : 'grayscale-[35%]',
+        ]}
+        loading="lazy"
+        decoding="async"
+        width="600"
+        height="450"
+      />
+      <!-- Warm gradient overlay at bottom -->
+      <div class="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-bark/10 to-transparent pointer-events-none"></div>
+      {
+        available ? (
+          <span class="absolute top-3 left-3 sm:top-4 sm:left-4 text-white font-bold text-xs sm:text-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-md backdrop-blur-sm" style="background: linear-gradient(135deg, var(--color-golden) 0%, var(--color-golden-dark) 100%);">
+            {formatPackPrice(product)}
+          </span>
+        ) : (
+          <span class="absolute top-3 left-3 sm:top-4 sm:left-4 bg-bark text-cream font-bold text-xs sm:text-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full shadow-sm uppercase tracking-wide">
+            Sold Out
+          </span>
+        )
+      }
+      {
+        available && (
+          <span
+            class="absolute bottom-4 right-4 w-10 h-10 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-lg"
+            aria-hidden="true"
+            style="background: linear-gradient(135deg, var(--color-golden) 0%, var(--color-golden-dark) 100%);"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+          </span>
+        )
+      }
+    </div>
+    <div class="p-4 sm:p-6">
+      <span class="text-[10px] sm:text-xs font-semibold text-golden uppercase tracking-wider">
+        {product.variety}
+      </span>
+      <h3 class="font-display text-lg sm:text-xl text-bark mt-1 sm:mt-1.5 mb-1.5 sm:mb-2 group-hover:text-apple transition-colors">
+        {product.name}
+      </h3>
+      <p class="text-xs sm:text-sm text-body line-clamp-2 leading-relaxed">{product.description}</p>
+      {
+        !available && (
+          <p class="text-sm font-medium text-apple mt-3">Currently unavailable — check back soon.</p>
+        )
+      }
+    </div>
+  </a>
+
+  {
+    available ? (
+      <div class="px-4 sm:px-6 pb-4 sm:pb-6 flex items-center gap-2" data-card-actions>
+        <div class="flex items-center border border-sage rounded-full overflow-hidden flex-shrink-0 bg-cream">
+          <button
+            type="button"
+            data-qty-minus
+            class="px-3 py-2 text-golden hover:bg-sage transition-colors"
+            aria-label="Decrease quantity"
+          >
+            −
+          </button>
+          <span data-qty-value class="px-3 py-2 text-sm font-semibold min-w-[2rem] text-center text-bark">1</span>
+          <button
+            type="button"
+            data-qty-plus
+            class="px-3 py-2 text-golden hover:bg-sage transition-colors"
+            aria-label="Increase quantity"
+          >
+            +
+          </button>
+        </div>
+        <button
+          type="button"
+          data-add-to-cart
+          class="flex-1 px-4 py-2.5 text-white text-sm font-semibold rounded-full transition-all duration-300"
+          style="background: linear-gradient(135deg, var(--color-apple) 0%, var(--color-apple-dark) 100%);"
+        >
+          Add to Cart
+        </button>
+      </div>
+    ) : (
+      <div class="px-4 sm:px-6 pb-4 sm:pb-6">
+        <button
+          type="button"
+          disabled
+          class="w-full px-4 py-2.5 bg-sage text-body/60 text-sm font-semibold rounded-full cursor-not-allowed"
+        >
+          Sold Out
+        </button>
+      </div>
+    )
+  }
+</article>
+
+<script>
+  import type { Product } from '../lib/products';
+  import { addToCart } from '../lib/cart';
+
+  document.querySelectorAll('[data-product-card]:not([data-sold-out])').forEach((card) => {
+    const product = JSON.parse(card.getAttribute('data-product') || '{}') as Product;
+    const qtyValue = card.querySelector('[data-qty-value]');
+    const minusBtn = card.querySelector('[data-qty-minus]');
+    const plusBtn = card.querySelector('[data-qty-plus]');
+    const addBtn = card.querySelector<HTMLButtonElement>('[data-add-to-cart]');
+    const actions = card.querySelector('[data-card-actions]');
+    let quantity = 1;
+
+    const updateQty = (next: number) => {
+      quantity = Math.max(1, next);
+      if (qtyValue) qtyValue.textContent = String(quantity);
+    };
+
+    minusBtn?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      updateQty(quantity - 1);
+    });
+
+    plusBtn?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      updateQty(quantity + 1);
+    });
+
+    actions?.addEventListener('click', (event) => {
+      event.stopPropagation();
+    });
+
+    addBtn?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      addToCart(product, quantity);
+      if (addBtn) {
+        addBtn.textContent = 'Added ✓';
+        addBtn.style.background = `linear-gradient(135deg, var(--color-leaf) 0%, var(--color-leaf-dark) 100%)`;
+        window.setTimeout(() => {
+          addBtn.textContent = 'Add to Cart';
+          addBtn.style.background = `linear-gradient(135deg, var(--color-apple) 0%, var(--color-apple-dark) 100%)`;
+        }, 1500);
+      }
+    });
+  });
+</script>
