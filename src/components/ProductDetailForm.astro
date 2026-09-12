@@ -41,7 +41,7 @@ const available = isProductAvailable(product);
         {
           !available && (
             <span class="absolute top-4 left-4 bg-bark text-cream font-bold text-sm px-4 py-2 rounded-full uppercase tracking-wide">
-              Sold Out
+              {product.harvestingSoon ? 'Harvesting Soon' : 'Sold Out'}
             </span>
           )
         }
@@ -75,10 +75,10 @@ const available = isProductAvailable(product);
         ) : (
           <div class="mt-8 space-y-3">
             <span class="inline-flex items-center px-5 py-3 rounded-full bg-bark text-cream font-semibold uppercase tracking-wide text-sm">
-              Sold Out
+              {product.harvestingSoon ? 'Harvesting Soon' : 'Sold Out'}
             </span>
             <p class="text-body/80">
-              This variety is currently unavailable. Please check back soon or order Royal Delicious or Granny Smith instead.
+              {product.harvestingSoon ? 'This variety will be available for harvest soon. Please check back later.' : 'This variety is currently unavailable. Please check back soon or order Royal Delicious or Granny Smith instead.'}
             </p>
           </div>
         )

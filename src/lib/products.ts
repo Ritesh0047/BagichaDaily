@@ -9,6 +9,7 @@ export interface Product {
   image: string;
   description: string;
   soldOut?: boolean;
+  harvestingSoon?: boolean;
 }
 
 export const products: Product[] = productsData;
